@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 
 public class Server {
     private ServerSocket server;
@@ -30,7 +31,22 @@ public class Server {
 
                     String message = clientInput.readLine();
                     System.out.println("Messaggio ricevuto da client: " + message);
-                    serverOutput.writeBytes(message + "\n");
+                    switch(message.toLowerCase()) {
+                        case "data":
+                            serverOutput.writeBytes("La data di oggi e' " + new Date() + "\n");
+                            break;
+
+                        case "meteo":
+                            serverOutput.writeBytes("Oggi e' soleggiato " + "\n");
+                            break;
+
+                        case "saluto":
+                            serverOutput.writeBytes("Ciao! Come posso aiutarti? " + "\n");
+                            break;
+
+                        default:
+                            serverOutput.writeBytes("Scusa, non conosco questo comando. " + "\n");
+                    }
                     serverOutput.flush();
                 }
             } catch (IOException e) {
